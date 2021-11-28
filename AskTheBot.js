@@ -153,9 +153,7 @@ window.addEventListener("keydown", function (e) { KeyDown(e); }); //Listenning f
 
 window.addEventListener("click", function (e) { MouseDown(e); });
 
-window.addEventListener("touch", function (e) { FouchDown(e); });
-
-//window.addEventListener("touch", function (e) { TouchDown(e); });
+window.addEventListener("touchstart", function (e) { TouchDown(e); });
 
 var match = canvas.width/6;
 
@@ -333,7 +331,7 @@ function DrawCar(car)
 	);
 }
 
-function FouchDown(e)
+function TouchDown(e)
 {
 if (e.clientX < canvas.width/2)
 	{
