@@ -99,30 +99,30 @@ class Car
 		switch(v)
 	      {
 		case "xl": //Left
-		        if (this.x > 155)
+		        if (this.x > match + match/3 +50)
 		        {
-			this.x += -95;
+			this.x += -match;
 			break;
 			} else {break;}
 
 		case "xr": //Right
-		        if (this.x < 425)
+		        if (this.x < 4*match -50)
 		        {
-			this.x += 95;
+			this.x += match;
 			break;
 			} else {break;}
 
 		case "yu": //Up
 		        if (this.y > 50)
 		        {
-			this.y += -95;
+			this.y += -match;
 			break;
 			} else {break;}
 
 		case "yd": //Down
-		        if (this.y < canvas.height-50)
+		        if (this.y < canvas.height-50 - match/3)
 		        {
-			this.y += 95;
+			this.y += match;
 			break;
 			} else {break;}
 
@@ -139,7 +139,8 @@ var timer = null;
 var canvas = document.getElementById("canvas"); //Getting the canvas from DOM
 var ctx = canvas.getContext("2d"); //Getting the context to work with the canvas
 
-var scale = 0.1; //Cars scale
+var scale = 0.15; //Cars scale
+
 
 Resize(); //Changing the canvas size on startup
 
@@ -150,7 +151,13 @@ canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); return
 
 window.addEventListener("keydown", function (e) { KeyDown(e); }); //Listenning for keyboard events
 
-window.addEventListener("click", function (e) { MouseDownm(e); });
+window.addEventListener("click", function (e) { MouseDown(e); });
+
+window.addEventListener("touch", function (e) { FouchDown(e); });
+
+//window.addEventListener("touch", function (e) { TouchDown(e); });
+
+var match = canvas.width/6;
 
 var objects = []; //Game objects
 
@@ -160,7 +167,7 @@ var roads =
 	new Road("images/road.jpg", canvas.width)
 ]; //Backgrounds
 
-var player = new Car("images/car.png", 240, canvas.height / 1.5, true); //Player's object
+var player = new Car("images/car.png", match + match/3, canvas.height / 1.5, true); //Player's object
 
 var myRandom = new MyRandom("images/l000l.jpg", canvas.width / 1.25, canvas.height / 8); //Создаю обьект моей картинки
 
@@ -197,19 +204,19 @@ function Update()
 	        switch(whichRoad)
 	{
 		case 0: 
-			objects.push(new Car("images/car_red.png", 135, RandomInteger(250, 400) * -1, false));
+			objects.push(new Car("images/car_red.png", match + match/3, RandomInteger(250, 400) * -1, false));
 			break;
 
 		case 1: 
-			objects.push(new Car("images/car_red.png", 230, RandomInteger(250, 400) * -1, false));
+			objects.push(new Car("images/car_red.png", match*2 + match/5, RandomInteger(250, 400) * -1, false));
 			break;
 
 		case 2: 
-			objects.push(new Car("images/car_red.png", 325, RandomInteger(250, 400) * -1, false));
+			objects.push(new Car("images/car_red.png", match*3 + match/6, RandomInteger(250, 400) * -1, false));
 			break;
 
 		case 3: 
-			objects.push(new Car("images/car_red.png", 425, RandomInteger(250, 400) * -1, false));
+			objects.push(new Car("images/car_red.png", match*4 + match/10, RandomInteger(250, 400) * -1, false));
 			break;
 		
 	}	        
@@ -259,8 +266,9 @@ function Update()
 
 		if(hit)
 		{       
-		        myRandom.x = 0;
-		        myRandom.y = 0;
+		        myRandom.x = (canvas.width/2)-(myRandom.image.width/3);
+		        myRandom.y = (canvas.height/2)-(myRandom.image.height/3);
+		        player = null;
 		        scale = 0.78;
 		        for (var i = 0; i < objects.length; i++)
 		        {
@@ -325,7 +333,19 @@ function DrawCar(car)
 	);
 }
 
-function MouseDownm(e)
+function FouchDown(e)
+{
+if (e.clientX < canvas.width/2)
+	{
+	player.Move("xl");
+	}
+	if (e.clientX > canvas.width/2)
+	{
+	player.Move("xr");
+	}
+
+}
+function MouseDown(e)
 {
 	if (e.clientX < canvas.width/2)
 	{
