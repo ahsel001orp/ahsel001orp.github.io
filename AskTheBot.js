@@ -139,9 +139,6 @@ var timer = null;
 var canvas = document.getElementById("canvas"); //Getting the canvas from DOM
 var ctx = canvas.getContext("2d"); //Getting the context to work with the canvas
 
-var scale = 0.15; //Cars scale
-
-
 Resize(); //Changing the canvas size on startup
 
 window.addEventListener("resize", Resize); //Change the canvas size with the window size
@@ -164,6 +161,8 @@ var roads =
 	new Road("images/road.jpg", 0),
 	new Road("images/road.jpg", canvas.width)
 ]; //Backgrounds
+
+var scale = roads[0].image.width*0.00015 //h0.15; //Cars scale
 
 var player = new Car("images/car.png", match + match/3, canvas.height / 1.5, true); //Player's object
 
