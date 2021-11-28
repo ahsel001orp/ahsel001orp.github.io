@@ -150,6 +150,8 @@ canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); return
 
 window.addEventListener("keydown", function (e) { KeyDown(e); }); //Listenning for keyboard events
 
+window.addEventListener("click", function (e) { MouseDownm(e); });
+
 var objects = []; //Game objects
 
 var roads = 
@@ -323,6 +325,18 @@ function DrawCar(car)
 	);
 }
 
+function MouseDownm(e)
+{
+	if (e.clientX < canvas.width/2)
+	{
+	player.Move("xl");
+	}
+	if (e.clientX > canvas.width/2)
+	{
+	player.Move("xr");
+	}
+
+}
 function KeyDown(e)
 {
 	switch(e.keyCode)
