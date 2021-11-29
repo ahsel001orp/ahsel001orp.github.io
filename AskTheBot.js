@@ -332,6 +332,15 @@ if (e.clientX < canvas.width/2)
 	{
 	player.Move("xr");
 	}
+if (e.pageX < canvas.width/2)
+	{
+	player.Move("xl");
+	}
+	if (e.pageX > canvas.width/2)
+	{
+	player.Move("xr");
+	}
+
 
 }
 function MouseDown(e)
