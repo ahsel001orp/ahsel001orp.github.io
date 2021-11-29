@@ -171,7 +171,7 @@ var speed = 5;
 
 var change = true;
 
-//Start();
+Start();
 
 
 function Start()
