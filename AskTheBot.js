@@ -131,7 +131,6 @@ class Car
        }
 }
 
-
 const UPDATE_TIME = 1000 / 60;
 
 var timer = null;
@@ -144,7 +143,7 @@ Resize(); //Changing the canvas size on startup
 window.addEventListener("resize", Resize); //Change the canvas size with the window size
 
 //Forbidding openning the context menu to make the game play better on mobile devices
-canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); return false; }); 
+//canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); return false; }); 
 
 window.addEventListener("keydown", function (e) { KeyDown(e); }); //Listenning for keyboard events
 
@@ -162,7 +161,7 @@ var roads =
 	new Road("images/road.jpg", canvas.width)
 ]; //Backgrounds
 
-var scale = roads[0].image.width*0.00015 //h0.15; //Cars scale
+var scale = roads[0].image.width*0.00015; //h0.15; //Cars scale
 
 var player = new Car("images/car.png", match + match/3, canvas.height / 1.5, true); //Player's object
 
@@ -172,7 +171,7 @@ var speed = 5;
 
 var change = true;
 
-Start();
+//Start();
 
 
 function Start()
@@ -229,16 +228,6 @@ function Update()
 	}
 
 	player.Update();
-			
-//	myRandom.Update();  //Перерисовываю обьект моей картинки
-
-	if(player.dead)
-	{
-		alert("Crash!");
-		Stop();
-	}
-
-	var isDead = false; 
 
 	for(var i = 0; i < objects.length; i++)
 	{
@@ -254,6 +243,14 @@ function Update()
 	{
 		objects.shift();
 	}
+	
+	if(player.dead)	
+	{		 
+		 DrawCar(myRandom);
+		 player.dead = true;		 		       	
+	}
+
+	var isDead = false; 
 
 	var hit = false;
 
@@ -265,16 +262,11 @@ function Update()
 		{       
 		        myRandom.x = (canvas.width/2)-(myRandom.image.width/3);
 		        myRandom.y = (canvas.height/2)-(myRandom.image.height/3);
-		        player = null;
+		        player.x = (canvas.width/2)-(myRandom.image.width/3);
+		        player.y = (canvas.height/2)-(myRandom.image.height/3);
 		        scale = 0.78;
-		        for (var i = 0; i < objects.length; i++)
-		        {
-		        objects[i] = null;
-		        }
-		        DrawCar(myRandom);		        
-			Stop();			
-			player.dead = true;
-			
+		        for(var i = 0; i < objects.length; i++)
+		        { objects[i] = true;}		        	        
 			break;
 		}
 	}	
@@ -405,4 +397,36 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
+function PlayAgain() {
+  //ctx.clearRect(0, 0, canvas.width, canvas.height); //Clearing the canvas
+  player = new Car("images/car.png", match + match/3, canvas.height / 1.5, true);   
+  start();
+}
+
+function initialize() {
+	hit = false;
+	UPDATE_TIME = 1000 / 60;
+	timer = null;
+	canvas = document.getElementById("canvas");
+	ctx = canvas.getContext("2d");
+	Resize();
+	window.addEventListener("resize", Resize);
+	canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); return false; }); 
+	window.addEventListener("keydown", function (e) { KeyDown(e); });
+	window.addEventListener("click", function (e) { MouseDown(e); });
+	window.addEventListener("touchstart", function (e) { TouchDown(e); });
+	match = canvas.width/6;
+	objects = [];
+	roads = 
+	[
+		new Road("images/road.jpg", 0),
+		new Road("images/road.jpg", canvas.width)
+	];
+
+	scale = roads[0].image.width*0.00015; 
+	player = new Car("images/car.png", match + match/3, canvas.height / 1.5, true);
+	myRandom = new MyRandom("images/l000l.jpg", canvas.width / 1.25, canvas.height / 8);
+	speed = 5;
+	change = true;
+}
 
