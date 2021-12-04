@@ -131,7 +131,7 @@ class Car
        }
 }
 
-const UPDATE_TIME = 1000 / 100;
+const UPDATE_TIME = 1000 / 60;
 
 var timer = null;
 
