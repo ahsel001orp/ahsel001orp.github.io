@@ -155,11 +155,23 @@ var match = canvas.width/6;
 
 var objects = []; //Game objects
 
-var roads = 
+if (canvas.width>canvas.height)
+{
+var roads =
 [
 	new Road("images/road.jpg", 0),
 	new Road("images/road.jpg", canvas.width)
 ]; //Backgrounds
+}
+else
+
+{
+var roads =
+[
+	new Road("images/roadLong.jpg", 0),
+	new Road("images/roadLong.jpg", canvas.width)
+]; //Backgrounds
+}
 
 var scale = roads[0].image.width*0.00015; //h0.15; //Cars scale
 
